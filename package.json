@@ -1,0 +1,23 @@
+{
+  "name": "sanitytestcafe",
+  "version": "1.0.0",
+  "description": "Brief checks of automationintesting.online",
+  "main": "index.js",
+  "scripts": {
+    "test": "testcafe chrome index.js",
+    "testh": "testcafe chrome:headless index.js",
+    "testall": "testcafe all --speed 1 index.js",
+    "testslow": "testcafe chrome --speed 0.6 index.js",
+    "testmobile": "testcafe chrome:emulation:device=iphone X index.js",
+    "testverbose": "testcafe chrome index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "sanityTestCafe"
+  },
+  "author": "Adam Piskorek",
+  "license": "ISC",
+  "devDependencies": {
+    "testcafe": "^1.1.2"
+  }
+}
