@@ -4,10 +4,10 @@
   "description": "Brief checks of automationintesting.online",
   "main": "index.js",
   "scripts": {
-    "test": "testcafe chrome index.js",
+    "test": "testcafe chrome --speed 0.6 index.js",
     "testh": "testcafe chrome:headless index.js",
     "testall": "testcafe all --speed 1 index.js",
-    "testslow": "testcafe chrome --speed 0.6 index.js",
+    "testff": "testcafe firefox index.js",
     "testmobile": "testcafe chrome:emulation:device=iphone X index.js",
     "testverbose": "testcafe chrome index.js"
   },
