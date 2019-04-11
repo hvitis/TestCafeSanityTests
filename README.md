@@ -1,4 +1,4 @@
-# sanityTestCafe
+# TestCafeSanityTests
 
 A few simple sanity tests made with Test Cafe against https://automationintesting.online/#/
 
