@@ -7,8 +7,9 @@ import FontEnd from "./frontend-model"
 // Importing page selectors
 const admin = new Admin();
 const fe = new FontEnd()
+
 const addRooms = 2
-const roomNumber = "123"
+const roomNumber = (admin.randRoomNumber(2)).toString()
 
 // PopUps selectors on every page.
 const nextButton = Selector("#next")
@@ -24,9 +25,7 @@ fixture `Admin panel`
         }
         await t.click(closeButton)
         // Logging to admin panel.
-        await t.typeText(admin.usernameField, admin.login)
-        await t.typeText(admin.passwordField, admin.password)
-        await t.click(admin.loginButton)
+       await admin.logging()
     });
 
     test(`As an ADMIN I want to add ${addRooms} rooms to the list.`, async t => {
@@ -52,28 +51,26 @@ fixture `FrontEnd page`
     })
     // Testing assuming that default amount of rooms before adding was 1 (which is the amount after server restart)
     test('As a USER I want to see total number of rooms.', async t => {
-        await t.expect(Selector('.col-sm-7').count).eql(3, "Created rooms not visible on front page.");
+        await t.expect(Selector('.col-sm-7').count).eql(3, "Amount of created rooms not consistent on the front page.");
     });
 
 
     test('As a USER I want to send a contact form.', async t => {
-
-    const form = {
-        "name" : Selector("#name"),
-        "email" : Selector("#email"),
-        "phone" : Selector("#phone"),
-        "subject": Selector("#subject"),
-        "message": Selector("#message"),
-        "submit": Selector("#submitContact")
-    }
     await t
-        .typeText(form.name, 'Adam')
-        .typeText(form.name, 'Piskrek', {
+        .typeText(fe.form.name, 'Adam')
+        .typeText(fe.form.name, 'Piskrek', {
             replace: true
         })
-        .typeText(form.name, 'o', {
+        .typeText(fe.form.name, 'o', {
             caretPos: 4
         })
-        .expect(form.name.value).eql('Piskorek');
-    await t.typeText(form.email, 'example@email.local').click(submit)
+        .expect(fe.form.name.value).eql('Piskorek');
+    await t.typeText(fe.form.email, 'example@email.local')
+    await t.typeText(fe.form.phone, '+34999555333')
+    await t.typeText(fe.form.subject, 'Question.')
+    await t.typeText(fe.form.message, 'Possible cheaper?').click(fe.form.submit)
+    await t.expect(fe.invalidFeedback.count).eql(2, "Validation after typing too short messages and topic.");
+    await t.typeText(fe.form.subject, ' about price must have at least twenty characters.')
+    await t.typeText(fe.form.message, 'Is it possible to have that room for Thursday a bit cheaper?').click(fe.form.submit)
+    await t.expect(fe.messageTitle.count).eql(2, "Message has been send information.")
 });

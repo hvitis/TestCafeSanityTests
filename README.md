@@ -2,10 +2,10 @@
 
 A few simple sanity tests made with Test Cafe against https://automationintesting.online/#/
 
-1. 1. npm i
-2. 2. npm test
-3. or
-4. 3. npm run testh
+1. npm i
+2. npm test
+or
+3. npm run testh
 
 ### Different settings to run:
 
