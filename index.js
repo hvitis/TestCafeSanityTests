@@ -21,10 +21,7 @@ fixture `Admin panel`
     .page `https://automationintesting.online/#/admin`
     .beforeEach(async t => {
         // Closing PopUp.
-        for (var i = 0; i < 4; i++) {
-            await t.click(nextButton)
-        }
-        await t.click(closeButton)
+        await fe.closingPopUp(nextButton, closeButton)
         // Logging to admin panel.
         await admin.logging()
     });
@@ -34,29 +31,25 @@ test(`As an ADMIN I want to add ${addRooms} rooms to the list.`, async t => {
         await t.typeText(admin.roomNumber, roomNumber)
             .click(admin.submitButton);
     }
-    await t.expect(Selector('#accessiblefalse').count).eql(addRooms + 1, "Amount of created rooms not consistent after deletion.");
+    await t.expect(admin.accessibleFalse.count).eql(addRooms + 1, "Amount of created rooms not consistent after deletion.");
 
 })
 
 test(`As an ADMIN I want to delete a room from the list.`, async t => {
     await t.click(admin.deleteButton)
-    await t.expect(Selector('#typeSingle').count).eql(addRooms, "Amount of created rooms not consistent after deletion.");
+    await t.expect(admin.typeSingle.count).eql(addRooms, "Amount of created rooms not consistent after deletion.");
 });
-
 
 
 fixture `FrontEnd page`
     .page `https://automationintesting.online/`
     .beforeEach(async t => {
         // Closing PopUp
-        for (var i = 0; i < 4; i++) {
-            await t.click(nextButton)
-        }
-        await t.click(closeButton)
+        await fe.closingPopUp(nextButton, closeButton)
     })
 // Testing assuming that default amount of rooms before adding was 1 (which is the amount after server restart.)
 test('As a USER I want to see total number of rooms.', async t => {
-    await t.expect(Selector('.col-sm-7').count).eql(addRooms, "Amount of created rooms not consistent on the front page.");
+    await t.expect(fe.roomsColumn.count).eql(addRooms, "Amount of created rooms not consistent on the front page.");
 });
 
 test('As a USER I want to send a contact form.', async t => {
@@ -80,9 +73,9 @@ test('As a USER I want to send a contact form.', async t => {
 });
 
 test('As a USER I want to see location tag on map.', async t => {
-    await t.expect(Selector('.pigeon-click-block').count).eql(1, "Geotag is not visible.");
+    await t.expect(fe.geotag.count).eql(1, "Number of geotags is not equal 1.");
 });
 
 test("As a USER I want to see company's logo.", async t => {
-    await t.expect(XPathSelector(fe.logoXPath).count).eql(1);
+    await t.expect(XPathSelector(fe.logoXPath).count).eql(1, "Number of logos is not equal 1.");
 });

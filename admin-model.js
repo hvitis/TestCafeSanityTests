@@ -3,8 +3,6 @@ import {
     t
 } from 'testcafe';
 
-
-
 export default class Admin {
     constructor() {
         this.roomNumber = Selector('#roomNumber');
@@ -16,6 +14,8 @@ export default class Admin {
         this.defaultRoom = Selector("#typeTwin")
         this.generalType = Selector("p")
         this.submitButton = Selector("#createRoom")
+        this.accessibleFalse = Selector('#accessiblefalse')
+        this.typeSingle = Selector('#typeSingle')
         this.login = "admin";
         this.password = "password";
     }
@@ -27,7 +27,7 @@ export default class Admin {
         await t.click(this.loginButton)
     }
 
-    randRoomNumber = (numberOfDigits) => {
+    randRoomNumber(numberOfDigits) {
         /**
          *  Takes an int as a parameter that is amount of digits that returned number will have.
          *  */
